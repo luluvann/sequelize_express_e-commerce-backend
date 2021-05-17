@@ -1,0 +1,69 @@
+diff --git a/models/index.js b/models/index.js
+index 59ade22..23ea630 100644
+--- a/models/index.js
++++ b/models/index.js
+@@ -1,25 +1,29 @@
+ // import models
+-const Product = require("./Product");
+-const Category = require("./Category");
+-const Tag = require("./Tag");
+-const ProductTag = require("./ProductTag");
++const Product = require('./Product');
++const Category = require('./Category');
++const Tag = require('./Tag');
++const ProductTag = require('./ProductTag');
+ 
+ // Products belongsTo Category
+-Product.belongsTo(Category, {
+-  foreignKey: "category_id",
+-});
++Product.belongsTo(Category,{
++  foreignKey:"category_id"
++})
+ // Categories have many Products
+-Category.hasMany(Product, {
+-  foreignKey: "category_id",
+-});
++Category.hasMany(Product,{
++  foreignKey:"category_id"
++})
+ // Products belongToMany Tags (through ProductTag)
+-Product.belongsToMany(ProductTag, {through: "product_id"});
++Product.belongsTo(Tag,{through: ProductTag,
++  foreignKey:"product_id"
++})
+ // Tags belongToMany Products (through ProductTag)
+-ProductTag.belongsToMany(Product, {through: "product_id"});
++Tag.belongsToMany(Product,{through: ProductTag,
++  foreignKey:"tag_id"
++})
+ 
+ module.exports = {
+   Product,
+-  Category, 
++  Category,
+   Tag,
+   ProductTag,
+ };
+diff --git a/routes/api/product-routes.js b/routes/api/product-routes.js
+index e07ffe4..0a904c9 100644
+--- a/routes/api/product-routes.js
++++ b/routes/api/product-routes.js
+@@ -7,7 +7,7 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
+ router.get('/', (req, res) => {
+   // find all products
+   // be sure to include its associated Category and Tag data
+-  Product.findAll({ include: [Category] }).then((products) => {
++  Product.findAll({ include: [Category, Tag] }).then((products) => {
+     res.json(products);
+   });
+ });
+@@ -17,7 +17,7 @@ router.get('/:id', (req, res) => {
+   // find a single product by its `id`
+   const id = req.params.id;
+   // be sure to include its associated Category and Tag data
+-  Product.findAll({include: [Category],where:{
++  Product.findAll({include: [Category, Tag], where:{
+     id
+   }}).then((product) => res.json(product))
+ });
