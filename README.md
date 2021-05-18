@@ -4,8 +4,7 @@
 Back-end using ExpressJS and Sequelize ORM
 
 ## Walktrough video
-[]()
-
+[https://drive.google.com/file/d/1cgH10X-MQMI8qJxHn8gdKglCHD26aArl/view?usp=sharing](https://drive.google.com/file/d/1cgH10X-MQMI8qJxHn8gdKglCHD26aArl/view?usp=sharing)
 
 ## Table of Contents
 
